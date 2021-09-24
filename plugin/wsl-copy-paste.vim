@@ -33,9 +33,19 @@ endif
 
 if exists('s:pwsh')
   let s:cmd = s:pwsh . ' -NoProfile -command Get-Clipboard'
-  exe 'nnoremap <silent> cp :.read!   ' . s:cmd . '<cr>'
-  exe 'nnoremap <silent> cP :.-1read! ' . s:cmd . '<cr>'
-  exe "xnoremap <silent>  P :'<,'>delete _<cr>:'[read!" . s:cmd . "<cr>"
+
+  function! ClipToReg() abort
+    " From https://superuser.com/questions/1291425/windows-subsystem-linux-make-vim-use-the-clipboard/1666502#1666502
+    silent let clipboard = system(s:cmd)
+    let clipboard = substitute(clipboard, '\r\n', '\n', 'g')
+    let clipboard = substitute(clipboard, '\n$', '', '')
+    " clipboard register + fails!
+    call setreg('+', clipboard)
+  endfunction
+
+  nnoremap <silent> cp :<c-u>call ClipToReg()<cr>"+p
+  nnoremap <silent> cP :<c-u>call ClipToReg()<cr>"+P
+  xnoremap <silent>  P :<c-u>call ClipToReg()<cr>gv"+p
 endif
 
 let g:loaded_wsl_copy_paste = 1
