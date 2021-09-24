@@ -43,9 +43,10 @@ if exists('s:pwsh')
     call setreg('9', clipboard)
   endfunction
 
-  nnoremap <silent> cp :<c-u>call ClipToReg()<cr>"9p
-  nnoremap <silent> cP :<c-u>call ClipToReg()<cr>"9P
-  xnoremap <silent>  P :<c-u>call ClipToReg()<cr>gv"9p
+  nnoremap <silent><expr> cp ':<c-u>call ClipToReg()<cr>' . v:count . '"9p:<c-u>silent! call repeat#set("cp",' . v:count . ')<cr>'
+  nnoremap <silent><expr> cP ':<c-u>call ClipToReg()<cr>' . v:count . '"9P:<c-u>silent! call repeat#set("cP",' . v:count . ')<cr>'
+
+  xnoremap <silent>        P  :<c-u>call ClipToReg()<cr>gv"9p
 endif
 
 let g:loaded_wsl_copy_paste = 1

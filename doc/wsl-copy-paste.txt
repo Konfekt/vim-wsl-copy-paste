@@ -16,4 +16,7 @@ and read on the Microsoft Windows clipboard (`c`):
         normal mode
     *   `P` in visual mode
 
+Relies on vim-repeat (https://github.com/tpope/vim-repeat) for repeatability
+by the `.` command.
+
  vim:tw=78:ts=8:ft=help:norl:

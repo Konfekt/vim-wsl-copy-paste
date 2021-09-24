@@ -12,6 +12,8 @@ This Vim plug-in adds mappings in `WSL` (Windows Subsystem for Linux) to write a
     - `cp` and `cP` (copy to the line before or after the cursor line) in normal mode
     - `P` in visual mode
 
+Relies on [vim-repeat](https://github.com/tpope/vim-repeat) for repeatability by the `.` command.
+
 # Related
 
 The repository [xclip-xsel-WSL](https://github.com/Konfekt/xclip-xsel-WSL) contributes a small Shell script to make `xclip` and `xsel` in `WSL` (Windows Subsystem for Linux) read and write on the Microsoft Windows clipboard instead of the Linux clipboard.
