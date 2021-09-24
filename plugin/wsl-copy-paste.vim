@@ -40,12 +40,12 @@ if exists('s:pwsh')
     let clipboard = substitute(clipboard, '\r\n', '\n', 'g')
     let clipboard = substitute(clipboard, '\n$', '', '')
     " clipboard register + fails!
-    call setreg('+', clipboard)
+    call setreg('9', clipboard)
   endfunction
 
-  nnoremap <silent> cp :<c-u>call ClipToReg()<cr>"+p
-  nnoremap <silent> cP :<c-u>call ClipToReg()<cr>"+P
-  xnoremap <silent>  P :<c-u>call ClipToReg()<cr>gv"+p
+  nnoremap <silent> cp :<c-u>call ClipToReg()<cr>"9p
+  nnoremap <silent> cP :<c-u>call ClipToReg()<cr>"9P
+  xnoremap <silent>  P :<c-u>call ClipToReg()<cr>gv"9p
 endif
 
 let g:loaded_wsl_copy_paste = 1
