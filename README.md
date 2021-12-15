@@ -16,5 +16,5 @@ Relies on [vim-repeat](https://github.com/tpope/vim-repeat) for repeatability by
 
 # Related
 
-The repository [xclip-xsel-WSL](https://github.com/Konfekt/xclip-xsel-WSL) contributes a small Shell script to make `xclip` and `xsel` in `WSL` (Windows Subsystem for Linux) read and write on the Microsoft Windows clipboard instead of the Linux clipboard.
+The repository [win-bash-xclip-xsel](https://github.com/Konfekt/win-bash-xclip-xsel) contributes a small Shell script to make `xclip` and `xsel` in `WSL` (or Git Bash) read and write on the Microsoft Windows clipboard instead of the Linux clipboard.
 
