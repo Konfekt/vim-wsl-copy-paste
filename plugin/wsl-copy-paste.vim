@@ -1,13 +1,14 @@
 if &compatible || exists('g:loaded_wsl_copy_paste')
-    finish
+  finish
 endif
 
 if !(has('unix') && exists('$WSLENV'))
   finish
 endif
 
+" To send to clipboard {{{
 if executable('clip.exe')
-  function! SendToClip(type, ...) abort
+  function! SetClip(type, ...) abort
     if a:0
       " Visual mode
       normal! gv"+y
@@ -21,20 +22,22 @@ if executable('clip.exe')
     call system('clip.exe', @+)
   endfunction
 
-  nnoremap <silent> cy      :set operatorfunc=SendToClip<cr>g@
-  xnoremap <silent> Y       :<C-U>call SendToClip(visualmode(),1)<cr>
+  nnoremap <silent> cy      :set operatorfunc=SetClip<cr>g@
+  xnoremap <silent> Y       :<C-U>call SetClip(visualmode(),1)<cr>
 endif
+" }}}
 
+" To receive from clipboard {{{
 if executable('pwsh.exe')
   let s:pwsh = 'pwsh.exe'
-elseif executable('powershell')
+elseif executable('powershell.exe')
   let s:pwsh = 'powershell.exe'
 endif
 
 if exists('s:pwsh')
   let s:cmd = s:pwsh . ' -NoProfile -command Get-Clipboard'
 
-  function! ClipToReg() abort
+  function! GetClip() abort
     " From https://superuser.com/questions/1291425/windows-subsystem-linux-make-vim-use-the-clipboard/1666502#1666502
     silent let clipboard = system(s:cmd)
     let clipboard = substitute(clipboard, '\r\n', '\n', 'g')
@@ -43,10 +46,11 @@ if exists('s:pwsh')
     call setreg('9', clipboard)
   endfunction
 
-  nnoremap <silent><expr> cp ':<c-u>call ClipToReg()<cr>' . v:count . '"9p:<c-u>silent! call repeat#set("cp",' . v:count . ')<cr>'
-  nnoremap <silent><expr> cP ':<c-u>call ClipToReg()<cr>' . v:count . '"9P:<c-u>silent! call repeat#set("cP",' . v:count . ')<cr>'
+  nnoremap <silent><expr> cp ':<c-u>call GetClip()<cr>' . v:count . '"9p:<c-u>silent! call repeat#set("cp",' . v:count . ')<cr>'
+  nnoremap <silent><expr> cP ':<c-u>call GetClip()<cr>' . v:count . '"9P:<c-u>silent! call repeat#set("cP",' . v:count . ')<cr>'
 
-  xnoremap <silent>        P  :<c-u>call ClipToReg()<cr>gv"9p
+  xnoremap <silent>        P  :<c-u>call GetClip()<cr>gv"9p
 endif
+" }}}
 
 let g:loaded_wsl_copy_paste = 1
